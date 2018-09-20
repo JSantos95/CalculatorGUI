@@ -61,6 +61,8 @@ public class Controller implements Initializable {
 				textField.clear();
 			}
 			textField.appendText(bText);
+			
+			//makes sure there are no invalid integer  
 			int totalDots=0;
 			for(int i=0; i<textField.getText().toString().length(); i++) {
 			   if(textField.getText().toString().charAt(i) == '.') {
@@ -86,21 +88,13 @@ public class Controller implements Initializable {
 		}
 		//when equal is pressed 
 		if(bText.equals("=")){
-			//special case for "." into "="
-			if(textField.getText().equals(".")){
-				textField.setText("0");
-			}
 			final BigDecimal right = numberInputting ? new BigDecimal(textField.getText()) : left;
-			
 			left = math(selectedOperator,left, right);
-			
-			//gets rid of trailing Zeros but avoids integers ending in 0
-			if(left.toString().indexOf('.') != -1) {
-				textField.setText(left.stripTrailingZeros().toPlainString());
-			}else {
-			textField.setText(left.toString());
-			}
+			//get rid of leading zeros 
+			textField.setText(left.stripTrailingZeros().toPlainString());
 			numberInputting = false;
+			//clear operator
+			selectedOperator = "";
 			return;
 		}
 		
