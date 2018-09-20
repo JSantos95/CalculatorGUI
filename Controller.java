@@ -88,13 +88,22 @@ public class Controller implements Initializable {
 		}
 		//when equal is pressed 
 		if(bText.equals("=")){
+			//special case for "." into "="
+			if(textField.getText().equals(".")){
+				textField.setText("0");
+			}
+			
 			final BigDecimal right = numberInputting ? new BigDecimal(textField.getText()) : left;
 			left = math(selectedOperator,left, right);
+			
 			//get rid of leading zeros 
 			textField.setText(left.stripTrailingZeros().toPlainString());
+			
 			numberInputting = false;
+			
 			//clear operator
 			selectedOperator = "";
+			
 			return;
 		}
 		
