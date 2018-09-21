@@ -97,6 +97,9 @@ public class Controller implements Initializable {
 			if(textField.getText().equals(".")){
 				textField.setText("0");
 			}
+			if(!numberInputting) {
+				return;
+			}
 			
 			final BigDecimal right = numberInputting ? new BigDecimal(textField.getText()) : left;
 			left = math(selectedOperator,left, right);
@@ -114,11 +117,21 @@ public class Controller implements Initializable {
 		
 		//flips signs 
 		if(bText.equals("+/-")){
+			//special case for leading decimal point 
+			String temp = textField.getText().toString();
+			boolean leadingPoint = false;
+			if (temp.indexOf(".") == temp.length()-1) {
+				leadingPoint = true;
+			}
+			
 			left = new BigDecimal(textField.getText());
 			if(left ==  BigDecimal.ZERO)
 					return;
 			left = left.negate();
 			textField.setText(left.toString());
+			if(leadingPoint) {
+				textField.appendText(".");
+			}
 			return;
 		}
 		
