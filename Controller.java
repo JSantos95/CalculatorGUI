@@ -78,8 +78,13 @@ public class Controller implements Initializable {
 		}
 		//entering operators 
 		if(bText.matches("\\+") || bText.matches("\\*") || bText.matches("\\/") || bText.matches("\\-")){
+			//nothing will be done if an integer isn't entered already 
 			if(textField.getText().toString().equals("")) {
 				return;
+			}
+			//special case for "." into operators 
+			if(textField.getText().equals(".")){
+				textField.setText("0");
 			}
 			left = new BigDecimal(textField.getText());
 			selectedOperator = bText;
