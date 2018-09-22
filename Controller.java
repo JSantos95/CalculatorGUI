@@ -123,12 +123,11 @@ public class Controller implements Initializable {
 			if (temp.indexOf(".") == temp.length()-1) {
 				leadingPoint = true;
 			}
-			
-			left = new BigDecimal(textField.getText());
-			if(left ==  BigDecimal.ZERO)
+			BigDecimal negText = new BigDecimal(textField.getText());
+			if(negText == BigDecimal.ZERO)
 					return;
-			left = left.negate();
-			textField.setText(left.toString());
+			negText = negText.negate();
+			textField.setText(negText.toString());
 			if(leadingPoint) {
 				textField.appendText(".");
 			}
