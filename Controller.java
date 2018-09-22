@@ -75,6 +75,9 @@ public class Controller implements Initializable {
 			   }
 			}
 			
+			//get rid of leading zeros 
+			if(textField.getText().equals("."))
+					return;
 			boolean leadingPoint = false;
 			if (textField.getText().toString().indexOf(".") == textField.getText().toString().length()-1) {
 				leadingPoint = true;
