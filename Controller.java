@@ -50,7 +50,7 @@ public class Controller implements Initializable {
 		}
 		//clears operator
 		if(bText.equals("C")){
-			selectedOperator = "";
+			textField.setText("");
 			numberInputting = false;
 			return;
 		}
@@ -74,6 +74,17 @@ public class Controller implements Initializable {
 				   return;
 			   }
 			}
+			
+			boolean leadingPoint = false;
+			if (textField.getText().toString().indexOf(".") == textField.getText().toString().length()-1) {
+				leadingPoint = true;
+			}
+			BigDecimal tempText = new BigDecimal(textField.getText());
+			textField.setText(tempText.toString());
+			if(leadingPoint) {
+				textField.appendText(".");
+			}
+			
 			return;
 		}
 		//entering operators 
@@ -117,6 +128,11 @@ public class Controller implements Initializable {
 		
 		//flips signs 
 		if(bText.equals("+/-")){
+			if(textField.getText().toString().equals("")){
+				AlertBox("ERROR","No number to negate");
+				textField.clear();
+				return;
+			}
 			//special case for leading decimal point 
 			String temp = textField.getText().toString();
 			boolean leadingPoint = false;
@@ -146,11 +162,11 @@ public class Controller implements Initializable {
 			case "*":
 				return left.multiply(right);
 			case "/":
-				if (right.intValueExact() == 0){
+				if (right.toString().equals("0")){
 					AlertBox("ERROR", "You Cannot Divide By Zero");
 					return BigDecimal.ZERO;
 				}
-				return left.divide(right, 8, RoundingMode.HALF_UP);
+				return left.divide(right, 8, RoundingMode.CEILING);
 				
 		}
 		return right;
